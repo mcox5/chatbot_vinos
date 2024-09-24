@@ -16,6 +16,20 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+
+# Gemfile
+gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'google-apis-gmail_v1'
+gem 'google-apis-sheets_v4'
+gem 'googleauth'
+gem "ruby-openai"
+gem 'rmail'
+gem 'csv'
+gem 'json'
+
+gem 'power_api', '~> 2.1.1'
+gem 'power-types'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
