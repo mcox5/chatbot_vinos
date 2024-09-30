@@ -22,6 +22,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'google-apis-gmail_v1'
 gem 'google-apis-sheets_v4'
+gem 'google-apis-drive_v3'
 gem 'googleauth'
 gem "ruby-openai"
 gem 'rmail'
@@ -30,6 +31,7 @@ gem 'json'
 
 gem 'power_api', '~> 2.1.1'
 gem 'power-types'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -51,6 +53,7 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem 'pry'
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
