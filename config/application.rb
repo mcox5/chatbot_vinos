@@ -19,6 +19,8 @@ module ChatbotVinos
     config.autoload_lib(ignore: %w[assets tasks])
     config.before_configuration do
       require Rails.root.join("lib/google/google.rb")
+      require Rails.root.join("lib/wines_catalog/wines_catalog.rb")
+      require Rails.root.join("lib/constants/openai_constants.rb")
     end
 
     # Configuration for the application, engines, and railties goes here.

@@ -11,6 +11,11 @@
 /.env*
 !/.env*.erb
 
+# Ignore Google Client Secret file
+/config/google/client_secret.json
+/config/google/token.yaml
+
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
