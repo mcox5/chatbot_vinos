@@ -17,7 +17,10 @@ module ChatbotVinos
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-    require Rails.root.join("lib/constants/openai_constants.rb")
+    config.before_configuration do
+      require Rails.root.join("lib/wines_catalog/wines_catalog.rb")
+      require Rails.root.join("lib/constants/openai_constants.rb")
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #
