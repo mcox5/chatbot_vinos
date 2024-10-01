@@ -10,15 +10,15 @@ module ChatbotVinos
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
-    config.api_only = true # Si estás construyendo una API
-    config.active_record.migration_error = :ignore # Ignorar migraciones
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.api_only = true
     config.autoload_lib(ignore: %w[assets tasks])
     config.before_configuration do
       require Rails.root.join("lib/google/google.rb")
+      require Rails.root.join("lib/whatsapp/whatsapp.rb")
       require Rails.root.join("lib/wines_catalog/wines_catalog.rb")
       require Rails.root.join("lib/constants/openai_constants.rb")
     end
