@@ -1,15 +1,22 @@
 class GenerateChatResponseJob < ApplicationJob
   queue_as :default
+  discard_on StandardError
 
-  def perform(user_input)
-    save_message("user", user_input)
-    handle_answer(client.chat_answer)
+  def perform(user_message, user_phone_number)
+    @user_message = user_message
+    @user_phone_number = user_phone_number
+    save_message("user", @user_message)
+    handle_answer(openai_client.chat_answer)
   end
 
   private
 
-  def client
-    @client ||= OpenaiClient.new(chat_history, OpenaiConstants.functions)
+  def openai_client
+    @openai_client ||= OpenaiClient.new(chat_history, OpenaiConstants.functions)
+  end
+
+  def whatsapp_client
+    @whatsapp_client ||= WhatsappClient.new
   end
 
   def chat_history
@@ -34,11 +41,16 @@ class GenerateChatResponseJob < ApplicationJob
 
   def handle_answer(chat_answer)
     if chat_answer[:response_type] == "message"
-      save_message("assistant", chat_answer[:content])
+      response_message = chat_answer[:content]
+      save_message("assistant", response_message)
+      whatsapp_client.send_message(@user_phone_number, response_message)
     elsif chat_answer[:response_type] == "function_call"
       order_attributes = format_order_attributes(chat_answer[:parameters])
       save_message("assistant", "Tu pedido está siendo procesado para enviar a bodega...\nDetalles de tu pedido\n#{WinesCatalog.order_details_text(order_attributes)}")
+      whatsapp_client.send_message(@user_phone_number, "Tu pedido está siendo procesado para enviar a bodega...\nDetalles de tu pedido\n#{WinesCatalog.order_details_text(order_attributes)}")
+      whatsapp_client.send_message(@user_phone_number, "Acá tienes el link para cobrar tu pedido: #{payment_link(order_attributes[:precio_total])}")
       SendOrderJob.perform_later(order_attributes)
+      whatsapp_client.send_message(@user_phone_number, "Tu pedido ha sido enviado a bodega! Puedes verlo en el mail que te llegó")
     end
   end
 
@@ -58,5 +70,9 @@ class GenerateChatResponseJob < ApplicationJob
       end,
       precio_total: order_attributes['items_pedido'].sum { |item| item['cantidad'] * WinesCatalog.get_price(item['categoria']) }
     }
+  end
+
+  def payment_link(total_price)
+    "https://slach.cl/matiascoxe/#{total_price}"
   end
 end
