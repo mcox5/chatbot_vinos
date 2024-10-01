@@ -45,7 +45,7 @@ module WinesCatalog
       Nombre del cliente: #{order_attributes['nombre_cliente']}
       Dirección de entrega: #{order_attributes['direccion_entrega']}
       Detalles del pedido:
-      #{order_attributes[:items_pedido].map { |item| "- #{item[:cantidad]} botellas de #{item[:variedad]} #{item[:categoria]} a $#{item[:precio_unitario]} c/u" }.join("\n")}
+      #{order_attributes[:items_pedido].map { |item| "- #{item[:cantidad]} botellas de #{item[:variedad]} #{item[:categoria]} a $#{item[:precio_cliente]} c/u" }.join("\n")}
       Precio total: $#{order_attributes[:precio_total]}
     TEXT
   end
