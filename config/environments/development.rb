@@ -17,6 +17,9 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+  # Permitir solicitudes desde el dominio de ngrok
+  config.hosts << ENV.fetch("DEVELOPMENT_HOST")
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
