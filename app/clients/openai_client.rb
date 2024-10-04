@@ -8,8 +8,8 @@ class OpenaiClient < BaseClient
     parameters = {
       model: "gpt-3.5-turbo",
       messages: @history,
-      temperature: 0.1,
-      max_tokens: 150
+      temperature: 0.2,
+      max_tokens: 200
     }
 
     if @functions
@@ -17,19 +17,23 @@ class OpenaiClient < BaseClient
       parameters[:function_call] = "auto"
     end
 
-    chat_answer ||= client.chat(parameters: parameters).dig("choices", 0, "message")
+    begin
+      chat_answer ||= client.chat(parameters: parameters).dig("choices", 0, "message")
 
-    if chat_answer["function_call"]
-      {
-        response_type: "function_call",
-        function_name: chat_answer["function_call"]["name"],
-        parameters: JSON.parse(chat_answer["function_call"]["arguments"])
-      }
-    else
-      {
-        response_type: "message",
-        content: chat_answer["content"]
-      }
+       if chat_answer["function_call"]
+        {
+          response_type: "function_call",
+          function_name: chat_answer["function_call"]["name"],
+          parameters: JSON.parse(chat_answer["function_call"]["arguments"])
+        }
+       else
+        {
+          response_type: "message",
+          content: chat_answer["content"]
+        }
+       end
+    rescue StandardError => e
+      raise OpenaiError::ChatAnswerOpenaiError, "Error getting chat answer: #{e.message}"
     end
   end
 

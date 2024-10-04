@@ -20,7 +20,7 @@ class GoogleDriveClient < GoogleClient
   def drive_service
     @drive_service ||= begin
       service = Google::Apis::DriveV3::DriveService.new
-      service.client_options.application_name = Google.application_name
+      service.client_options.application_name = GoogleLib::Google.application_name
       service.authorization = @credentials
       Rails.logger.info 'Google Drive client created'
       service

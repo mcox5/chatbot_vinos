@@ -19,9 +19,11 @@ module WinesCatalog
 
   def self.varieties
     [ "carmenere", "cabernet sauvignon", "merlot",
-     "sauvignon blanc", "chardonnay", "syrah",
-     "pinot noir", "malbec", "blend", "ensamblaje",
-    "roussane marssane", "tempranillo" ]
+      "sauvignon blanc", "chardonnay", "syrah",
+      "pinot noir", "malbec", "blend", "ensamblaje",
+      "roussane marssane", "tempranillo", "brut", "brut rose",
+      "carignan"
+    ]
   end
 
   def self.get_code(category)
@@ -42,8 +44,8 @@ module WinesCatalog
 
   def self.order_details_text(order_attributes)
     <<~TEXT
-      Nombre del cliente: #{order_attributes['nombre_cliente']}
-      Dirección de entrega: #{order_attributes['direccion_entrega']}
+      Nombre del cliente: #{order_attributes[:nombre_cliente]}
+      Dirección de entrega: #{order_attributes[:direccion_entrega]}
       Detalles del pedido:
       #{order_attributes[:items_pedido].map { |item| "- #{item[:cantidad]} botellas de #{item[:variedad]} #{item[:categoria]} a $#{item[:precio_cliente]} c/u" }.join("\n")}
       Precio total: $#{order_attributes[:precio_total]}
