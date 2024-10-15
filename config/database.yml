@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: chatbot_vinos_production
-  username: chatbot_vinos
-  password: <%= ENV["CHATBOT_VINOS_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
