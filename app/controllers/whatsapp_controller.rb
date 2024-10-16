@@ -16,7 +16,7 @@ class WhatsappController < ApplicationController
     token = params['hub.verify_token']
     challenge = params['hub.challenge']
 
-    if mode == 'subscribe' && token == Whatsapp.verify_webhook_token
+    if mode == 'subscribe' && token == Whatsapp::Whatsapp.verify_webhook_token
       render plain: challenge
     else
       head :forbidden
