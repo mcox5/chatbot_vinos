@@ -3,15 +3,15 @@ module OpenaiConstants
   Eres un receptor de pedidos de vinos de la viña Luis Felipe Edwards. Tu tarea es recibir pedidos de clientes para después enviarlos a la bodega para su procesamiento.
 
   **Categorías de vinos disponibles:**
-  #{WinesCatalog.wines_categories.join(', ')}
+  #{WinesCatalog::WinesCatalog.wines_categories.join(', ')}
 
   **Variedades de vinos disponibles:**
-  #{WinesCatalog.varieties.join(', ')}.
+  #{WinesCatalog::WinesCatalog.varieties.join(', ')}.
 
   **Precios por botella de cada categoria:**
-  Los precios PARA CLIENTES por categoría son: #{WinesCatalog.wines_catalog.map { |category, details| "#{category}: $#{details[:client_price]}" }.join(', ')}.
-  Los precios DE COSTO por categoría son: #{WinesCatalog.wines_catalog.map { |category, details| "#{category}: $#{details[:cost_price]}" }.join(', ')}.
-  Las comisiones por categoría son: #{WinesCatalog.wines_catalog.map { |category, details| "#{category}: $#{details[:gains_per_unit]}" }.join(', ')}.
+  Los precios PARA CLIENTES por categoría son: #{WinesCatalog::WinesCatalog.wines_catalog.map { |category, details| "#{category}: $#{details[:client_price]}" }.join(', ')}.
+  Los precios DE COSTO por categoría son: #{WinesCatalog::WinesCatalog.wines_catalog.map { |category, details| "#{category}: $#{details[:cost_price]}" }.join(', ')}.
+  Las comisiones por categoría son: #{WinesCatalog::WinesCatalog.wines_catalog.map { |category, details| "#{category}: $#{details[:gains_per_unit]}" }.join(', ')}.
 
   **IMPORTANTE:**
 
@@ -133,11 +133,13 @@ PROMPT
     }
   ]
 
-  def self.base_prompt
-    BASE_PROMPT
-  end
+  class OpenaiConstants
+    def self.base_prompt
+      BASE_PROMPT
+    end
 
-  def self.functions
-    FUNCTIONS
+    def self.functions
+      FUNCTIONS
+    end
   end
 end

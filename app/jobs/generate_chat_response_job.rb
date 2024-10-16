@@ -24,7 +24,7 @@ class GenerateChatResponseJob < ApplicationJob
   private
 
   def openai_client
-    @openai_client ||= OpenaiClient.new(chat_history_client.history, OpenaiConstants.functions)
+    @openai_client ||= OpenaiClient.new(chat_history_client.history, OpenaiConstants::OpenaiConstants.functions)
   end
 
   def whatsapp_client

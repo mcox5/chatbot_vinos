@@ -15,13 +15,8 @@ module ChatbotVinos
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.api_only = true
-    config.autoload_lib(ignore: %w[assets tasks])
-    config.before_configuration do
-      require Rails.root.join("lib/google/google_lib.rb")
-      require Rails.root.join("lib/whatsapp/whatsapp.rb")
-      require Rails.root.join("lib/wines_catalog/wines_catalog.rb")
-      require Rails.root.join("lib/constants/openai_constants.rb")
-    end
+    config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('lib')
 
     # Configuration for the application, engines, and railties goes here.
     #

@@ -25,7 +25,7 @@ class ChatHistoryClient
   private
 
   def load_history
-    history = [{ role: 'system', content: OpenaiConstants.base_prompt }]
+    history = [{ role: 'system', content: OpenaiConstants::OpenaiConstants.base_prompt }]
     return history unless File.exist?(@file_path)
 
     CSV.foreach(@file_path, headers: true) do |row|
