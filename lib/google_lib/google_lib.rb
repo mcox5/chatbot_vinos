@@ -1,5 +1,5 @@
 module GoogleLib
-  class Google
+  class GoogleLib
     def self.client_secrets_path
       Rails.root.join('config', 'google', 'client_secret.json')
     end

@@ -54,7 +54,7 @@ class GoogleSheetsClient < GoogleClient
   def sheets_service
     @sheets_service ||= begin
       service = Google::Apis::SheetsV4::SheetsService.new
-      service.client_options.application_name = GoogleLib::Google.application_name
+      service.client_options.application_name = GoogleLib::GoogleLib.application_name
       service.authorization = @credentials
       Rails.logger.info 'Google Sheets client created'
       service

@@ -45,7 +45,7 @@ class SendOrderJob < ApplicationJob
 
     google_sheets_client.write_to_sheet(spreadsheet, 'Hoja 1!A1:I1', [ headers ])
     google_sheets_client.write_to_sheet(spreadsheet, "Hoja 1!A2:I#{rows.size + 1}", rows)
-    google_drive_client.move_file(spreadsheet, GoogleLib::Google.orders_to_send_folder_id)
+    google_drive_client.move_file(spreadsheet, GoogleLib::GoogleLib.orders_to_send_folder_id)
 
     Rails.logger.info "Order sheet written to send"
   end
@@ -56,12 +56,12 @@ class SendOrderJob < ApplicationJob
 
   def send_order_sheet
     google_gmail_client.send_email(
-      GoogleLib::Google.my_email,
-      GoogleLib::Google.my_email,
-      GoogleLib::Google.order_subject,
-      GoogleLib::Google.order_body,
+      GoogleLib::GoogleLib.my_email,
+      GoogleLib::GoogleLib.my_email,
+      GoogleLib::GoogleLib.order_subject,
+      GoogleLib::GoogleLib.order_body,
       order_sheet_download,
-      GoogleLib::Google.order_file_name_excel
+      GoogleLib::GoogleLib.order_file_name_excel
     )
 
     Rails.logger.info "Order sent to Lorena"
@@ -70,11 +70,11 @@ class SendOrderJob < ApplicationJob
   def save_order_in_sheets_database
     ## COMMENT: SHEETS HEADERS ARE ['ID ORDEN', 'Nombre', 'Fecha', 'Dirección', 'Contacto', 'Codigo', 'Cantidad', 'Categoria', 'Variedad', 'Precio Viña', 'Precio Venta', 'CxP Vina', 'CxC Cliente', 'Comisión', 'Status', 'Status Transferencia', 'Total']
 
-    last_row = google_sheets_client.read_last_row(GoogleLib::Google.orders_database_spreadsheet_id, 'Pedidos')
+    last_row = google_sheets_client.read_last_row(GoogleLib::GoogleLib.orders_database_spreadsheet_id, 'Pedidos')
     last_order_id = last_row ? last_row[0].to_i : 0
     new_order_id = last_order_id + 1
 
-    last_row_index = last_row ? last_row_index = google_sheets_client.get_last_row_index(GoogleLib::Google.orders_database_spreadsheet_id, 'Pedidos') : 2
+    last_row_index = last_row ? last_row_index = google_sheets_client.get_last_row_index(GoogleLib::GoogleLib.orders_database_spreadsheet_id, 'Pedidos') : 2
     start_row = last_row_index
 
     rows = @order[:items_pedido].map do |item|
@@ -104,7 +104,7 @@ class SendOrderJob < ApplicationJob
       ]
     end
 
-    google_sheets_client.write_to_sheet(GoogleLib::Google.orders_database_spreadsheet_id, "Pedidos!A#{start_row}:Q#{start_row + rows.size - 1}", rows)
+    google_sheets_client.write_to_sheet(GoogleLib::GoogleLib.orders_database_spreadsheet_id, "Pedidos!A#{start_row}:Q#{start_row + rows.size - 1}", rows)
     Rails.logger.info "Order saved in database"
   end
 end

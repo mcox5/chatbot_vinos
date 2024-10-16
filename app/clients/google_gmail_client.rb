@@ -20,7 +20,7 @@ class GoogleGmailClient < GoogleClient
   def gmail_service
     @gmail_service ||= begin
       service = Google::Apis::GmailV1::GmailService.new
-      service.client_options.application_name = GoogleLib::Google.application_name
+      service.client_options.application_name = GoogleLib::GoogleLib.application_name
       service.authorization = @credentials
       Rails.logger.info 'Google Gmail client created'
       service
