@@ -72,7 +72,7 @@ class GenerateChatResponseJob < ApplicationJob
   end
 
   def send_order_messages(order_attributes, user_phone_number)
-    order_details = WinesCatalog.order_details_text(order_attributes)
+    order_details = WinesCatalog::WinesCatalog.order_details_text(order_attributes)
     whatsapp_client.send_message(user_phone_number, "Tu pedido está siendo procesado para enviar a bodega...\nDetalles de tu pedido\n#{order_details}")
     payment_url = payment_link(order_attributes[:precio_total])
     whatsapp_client.send_message(user_phone_number, "Acá tienes el link para cobrar tu pedido: #{payment_url}")
@@ -83,11 +83,11 @@ class GenerateChatResponseJob < ApplicationJob
       categoria = item['categoria']
       {
         categoria: categoria,
-        codigo_categoria: WinesCatalog.get_code(categoria),
+        codigo_categoria: WinesCatalog::WinesCatalog.get_code(categoria),
         variedad: item['variedad'],
         cantidad: item['cantidad'],
-        precio_cliente: WinesCatalog.get_price(categoria),
-        precio_costo: WinesCatalog.get_cost_price(categoria)
+        precio_cliente: WinesCatalog::WinesCatalog.get_price(categoria),
+        precio_costo: WinesCatalog::WinesCatalog.get_cost_price(categoria)
       }
     end
 
