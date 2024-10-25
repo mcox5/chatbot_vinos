@@ -238,7 +238,7 @@ GEM
     parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.8)
+    pg (1.5.9)
     power-types (0.7.0)
       activesupport
       after_commit_everywhere (~> 1.2, >= 1.2.2)
@@ -433,7 +433,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   json
-  pg (~> 1.1)
+  pg (~> 1.5)
   power-types
   power_api (~> 2.1.1)
   pry
